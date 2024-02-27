@@ -4,6 +4,7 @@
 from flask import Flask
 from os import getenv
 from models import storage
+from flask import jsonify
 
 app = Flask(__name__)
 
@@ -12,6 +13,12 @@ app = Flask(__name__)
 def close_session(exception):
     """Close session"""
     storage.close()
+
+
+@app.errorhandler(404)
+def not_found(error):
+    """Not found"""
+    return jsonify({"error": "Not found"}), 404
 
 
 if __name__ == '__main__':
